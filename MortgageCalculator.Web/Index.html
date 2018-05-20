@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="MortgageCalculatorApp">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body data-ng-controller="indexController" data-ng-init="mortgageType='';getMortgageDetails();">
+    <div>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <div class="navbar-brand">
+                        <img src="img/cba-logo.png" />
+                        <span>Simple Mortgage Calculator</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="body-content">
+            <div class="container body-content">
+                <div class="lead">
+                    <p>
+                        The Mortgage Calculator helps you to:
+                        <ul>
+                            <li>Choose the right loan for you</li>
+                            <li>Calculate the Interests and Repayment on your loan</li>
+                        </ul>
+                    </p>
+                </div>
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>Calculator</legend>
+                        <div class="row">
+                            <span class="col-md-2 control-label">Select Mortgage Type:</span>
+                            <div class="col-md-3">
+                                <select id="MortgageType" class="form-control input-md" data-ng-model="mortgageType" ng-change="getMortgageDetails()">
+                                    <option value="">Select</option>
+                                    <option value="1">Fixed</option>
+                                    <option value="0">Variable</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <span class="col-md-2 control-label">Enter Loan Amount:</span>
+                            <div class="col-md-3">
+                                <input id="Amount" type="number" class="form-control input-md" min="1" data-ng-model="amount" ng-pattern="allowNumbersOnly"/>
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <span class="col-md-2 control-label">Enter Duration (in years):</span>
+                            <div class="col-md-3">
+                                <input id="Duration" type="number" class="form-control input-md" min="1" max="99" data-ng-model="duration" ng-pattern="allowNumbersOnly"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <table class="table table-striped table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Terms In Months</th>
+                                    <th>Interest Rate (p.a)</th>
+                                    <th data-ng-show="amount > 0 && duration > 0">Total Repayment</th>
+                                    <th data-ng-show="amount > 0 && duration > 0">Total Interest</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="mortgage in mortgageData">
+                                    <td>{{mortgage.Name}}</td>
+                                    <td>{{mortgage.TermsInMonths}}</td>
+                                    <td>{{mortgage.InterestRate}}%</td>
+                                    <td data-ng-show="amount > 0 && duration > 0">{{totalInterest = interest(mortgage); amount + totalInterest | number:2}}</td>
+                                    <td data-ng-show="amount > 0 && duration > 0">{{totalInterest | number:2}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Scripts/angular.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/controllers/indexController.js"></script>
+</body>
+</html>
